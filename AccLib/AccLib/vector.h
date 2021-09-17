@@ -57,7 +57,7 @@ namespace acclib
 				// https://stackoverflow.com/questions/206405/overflows-in-size-t-additions
 				// https://stackoverflow.com/questions/7749066/how-to-catch-out-of-memory-exception-in-c/13327733
 				if (new_size < m_capacity)
-					throw std::bad_alloc();
+					throw std::overflow_error("New capacity overflows maximum. Element cannot be added.");
 
 				resize(new_size);
 			}
