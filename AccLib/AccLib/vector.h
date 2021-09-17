@@ -49,7 +49,6 @@ namespace acclib
 
 		void push_back(T value)
 		{
-			// Hier wäre es gut logarithmisches wachstum zu implementieren.
 			if (m_size >= m_capacity)
 			{
 				size_t new_size = (m_capacity + (m_capacity * 0.5f)) + 1;
@@ -58,13 +57,21 @@ namespace acclib
 				// https://stackoverflow.com/questions/206405/overflows-in-size-t-additions
 				// https://stackoverflow.com/questions/7749066/how-to-catch-out-of-memory-exception-in-c/13327733
 				if (new_size < m_capacity)
-					throw std::bad_alloc("m_buffer capacity is to large.");
+					throw std::bad_alloc();
 
 				resize(new_size);
 			}
 
 			m_buffer[m_size] = value;
 			++m_size;
+		}
+
+		T& operator[](size_t index)
+		{
+			if (index >= m_size)
+				throw std::invalid_argument("index must be smaller than m_size.");
+
+			return m_buffer[index];
 		}
 
 		~vector()
