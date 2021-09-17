@@ -123,6 +123,9 @@ int main()
 	// https://stackoverflow.com/questions/38807403/using-malloc-realloc-for-array-of-classes-structs-including-std-vector
 	// 
 
+	std::cout << std::numeric_limits<size_t>::max() << std::endl;
+	std::cout << std::numeric_limits<size_t>::max() + 1 << std::endl;
+
 	acclib::vector<foo2> acc_vec(3);
 	acc_vec.push_back(foo2("1"));
 	acc_vec.push_back(foo2("2"));

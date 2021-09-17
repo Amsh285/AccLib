@@ -29,9 +29,6 @@ namespace acclib
 
 		vector(const size_t& capacity)
 		{
-			if (capacity == 0)
-				throw std::invalid_argument("capacity must be larger than 0.");
-
 			m_buffer = new T[capacity];
 			m_capacity = capacity;
 			m_size = 0;
@@ -52,12 +49,17 @@ namespace acclib
 
 		void push_back(T value)
 		{
-			// Todo: überlauf checken. bzw größe 1 u. 0
-
 			// Hier wäre es gut logarithmisches wachstum zu implementieren.
 			if (m_size >= m_capacity)
 			{
 				size_t new_size = (m_capacity + (m_capacity * 0.5f)) + 1;
+
+				// Todo: überlauf checken. bzw größe 1 u. 0
+				// https://stackoverflow.com/questions/206405/overflows-in-size-t-additions
+				// https://stackoverflow.com/questions/7749066/how-to-catch-out-of-memory-exception-in-c/13327733
+				if (new_size < m_capacity)
+					throw std::bad_alloc("m_buffer capacity is to large.");
+
 				resize(new_size);
 			}
 
