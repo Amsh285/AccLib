@@ -5,6 +5,8 @@
 #include<cstdlib>
 #include<cstring>
 
+#include "vector.h"
+
 #define MaxLength INT_MAX - 1
 
 namespace acclib
@@ -12,20 +14,18 @@ namespace acclib
 	class String
 	{
 	public:
+		static constexpr size_t npos = std::numeric_limits<size_t>::max();
+
 		String();
 		String(const char* value);
 		
-		
+		int index_of(const char& value);
+
+		void concatenate(const char* value);
 
 		~String();
 	private:
-		String(const char* value, size_t capacity, float magnification, size_t maxCapacity);
-
-		void concatenate(const char* target, const char* value);
-
-		size_t m_capacity;
-		float m_magnification;
-		size_t m_maxCapacity;
+		
 
 		// Erstellung eines Strings mit const char*
 		// 
@@ -41,7 +41,7 @@ namespace acclib
 		// aber das wirkt sich dann auf den Performance constraint aus.
 		// Mit realloc muss man den alten string nicht immer wieder kopieren,
 		// weil der speicher einfach nur vergrößert wird.
-		char* m_buffer;
+		acclib::vector<char> m_buffer;
 	};
 }
 

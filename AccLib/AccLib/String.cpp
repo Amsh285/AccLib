@@ -1,45 +1,36 @@
 #include "String.h"
 
 acclib::String::String()
-	: String("", 100, 0.5f, MaxLength)
+	: String("")
 {
 }
 
 acclib::String::String(const char* value)
-	: String(value, 100, 0.5f, MaxLength)
 {
+	m_buffer.push_back('\0');
+	concatenate(value);
 }
 
-acclib::String::String(const char* value, size_t capacity, float magnification, size_t maxCapacity)
-	: m_capacity(capacity), m_magnification(magnification), m_maxCapacity(maxCapacity)
+int acclib::String::index_of(const char& value)
 {
-	m_buffer = _strdup(value);
-	/*concatenate(m_buffer, value);*/
+	for (size_t i = 0; i < m_buffer.size(); i++)
+		if (m_buffer[i] == value)
+			return i;
+
+	return acclib::String::npos;
 }
 
-void acclib::String::concatenate(const char* target, const char* value)
+void acclib::String::concatenate(const char* value)
 {
-	const size_t targetCapacity = strlen(target) + strlen(value) + 1;
+	size_t terminator_position = index_of('\0');
 
-	//Speicherplatz immer in 0.5% schritten erhöhen bis targetcapacity überschritten wurde.
-	while (m_capacity <= targetCapacity)
-		m_capacity = m_capacity + m_capacity * m_magnification;
+	for (size_t i = terminator_position; i < strlen(value); i++)
+		m_buffer.push_back(value[i]);
 
-	char* temp = (char*)realloc(m_buffer, sizeof(char) * m_capacity);
-
-	if (temp != nullptr)
-		m_buffer = temp;
-	else
-	{
-		//todo
-	}
-
-	strcat_s(m_buffer, sizeof(char) * m_capacity, value);
+	m_buffer.push_back('\0');
 }
 
 acclib::String::~String()
 {
-	// https://stackoverflow.com/questions/2001286/const-char-s-in-c
-	if (m_buffer != nullptr)
-		free(m_buffer);
+	m_buffer.~vector();
 }

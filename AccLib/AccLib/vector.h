@@ -12,9 +12,7 @@ namespace acclib
 
 		size_t size() const { return m_size; };
 
-		// ich lass es mal weg weil es eher unsicher ist und nicht viel mehrwert bringt
-		// weil es wahrscheinlicher ist das irgendwann mal ein Fehler bei malloc oder realloc 
-		// eintritt bevor das hier erreicht wird.
+		// bringt wahrscheinlich nicht viel weil man vorher andere probleme kriegen wird
 		//size_t max_size() const
 		//{
 		//	// https://newbedev.com/c-vector-max-size
@@ -38,22 +36,25 @@ namespace acclib
 		{
 			T* temp = new T[capacity];
 
-			for (std::size_t i = 0; i < m_size; ++i)
+			size_t read_size = m_size < capacity ? m_size: capacity;
+
+			for (std::size_t i = 0; i < read_size; ++i)
 				temp[i] = m_buffer[i];
 
 			delete[] m_buffer;
 
 			m_buffer = temp;
 			m_capacity = capacity;
+			m_size = read_size;
 		}
 
 		void push_back(T value)
 		{
 			if (m_size >= m_capacity)
 			{
-				size_t new_size = (m_capacity + (m_capacity * 0.5f)) + 1;
+				size_t growth = m_capacity * 0.5f;
+				size_t new_size = m_capacity + growth + 1;
 
-				// Todo: überlauf checken. bzw größe 1 u. 0
 				// https://stackoverflow.com/questions/206405/overflows-in-size-t-additions
 				// https://stackoverflow.com/questions/7749066/how-to-catch-out-of-memory-exception-in-c/13327733
 				if (new_size < m_capacity)
