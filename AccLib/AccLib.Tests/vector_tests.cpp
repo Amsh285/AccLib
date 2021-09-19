@@ -27,6 +27,36 @@ namespace AccLibTests
 			Assert::AreEqual(5, sut[3]);
 		}
 
+		TEST_METHOD(vector_copy_ctor)
+		{
+			acclib::vector<int> other;
+			other.push_back(1);
+			other.push_back(2);
+			other.push_back(3);
+
+			acclib::vector<int> sut = other;
+			sut[0] = 12;
+
+			Assert::AreEqual(1, other[0]);
+			Assert::AreEqual(12, sut[0]);
+		}
+
+		TEST_METHOD(vector_copy_assignment)
+		{
+			acclib::vector<int> other;
+			other.push_back(1);
+			other.push_back(2);
+			other.push_back(3);
+
+			acclib::vector<int> sut;
+			sut = other;
+
+			sut[0] = 100;
+
+			Assert::AreEqual(1, other[0]);
+			Assert::AreEqual(100, sut[0]);
+		}
+
 		TEST_METHOD(vector_can_grow)
 		{
 			test_growth(0);

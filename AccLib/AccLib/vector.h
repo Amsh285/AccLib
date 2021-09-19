@@ -12,14 +12,6 @@ namespace acclib
 
 		size_t size() const { return m_size; };
 
-		// bringt wahrscheinlich nicht viel weil man vorher andere probleme kriegen wird
-		//size_t max_size() const
-		//{
-		//	// https://newbedev.com/c-vector-max-size
-		//	// https://stackoverflow.com/questions/56208872/size-of-pointers-and-architecture
-		//	return (2 ^ nativePointerBitWidth) / sizeof(T) - 1;
-		//};
-
 		vector()
 			: vector(20)
 		{
@@ -30,6 +22,15 @@ namespace acclib
 			m_buffer = new T[capacity];
 			m_capacity = capacity;
 			m_size = 0;
+		}
+
+		vector(const acclib::vector<T>& other)
+			: m_size(other.m_size), m_capacity(other.m_capacity)
+		{
+			m_buffer = new T[other.m_capacity];
+
+			for (size_t i = 0; i < other.m_size; ++i)
+				m_buffer[i] = other.m_buffer[i];
 		}
 
 		void resize(const size_t& capacity)
@@ -81,6 +82,24 @@ namespace acclib
 				throw std::invalid_argument("index must be smaller than m_size.");
 
 			return m_buffer[index];
+		}
+
+		acclib::vector<T>& operator=(const acclib::vector<T>& other)
+		{
+			// https://en.cppreference.com/w/cpp/language/copy_assignment
+			if (this != &other)
+			{
+				delete[] m_buffer;
+
+				m_buffer = new T[other.capacity()];
+				m_size = other.size();
+				m_capacity = other.capacity();
+				
+				for (size_t i = 0; i < other.size(); ++i)
+					m_buffer[i] = other.at(i);
+			}
+
+			return *this;
 		}
 
 		~vector()

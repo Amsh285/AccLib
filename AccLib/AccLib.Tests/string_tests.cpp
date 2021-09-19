@@ -19,6 +19,30 @@ namespace AccLibTests
 			Assert::AreEqual(1, (int)sut.size());
 		}
 
+		TEST_METHOD(string_copy_ctor)
+		{
+			acclib::String other("hallo Welt");
+			acclib::String sut = other;
+			sut[0] = '$';
+
+			Assert::AreEqual('h', other[0]);
+			Assert::AreEqual('$', sut[0]);
+		}
+
+		TEST_METHOD(string_copy_assignment)
+		{
+			acclib::String other = "Hoi";
+
+			acclib::String sut;
+			//Todo: check if sut clears the first vector after copy assignment
+			sut = other;
+
+			sut[0] = 'B';
+
+			Assert::IsTrue(other == "Hoi");
+			Assert::IsTrue(sut == "Boi");
+		}
+
 		TEST_METHOD(string_init_with_value)
 		{
 			const char* expected_value = "Hallo Welt";

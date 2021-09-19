@@ -25,6 +25,8 @@ namespace acclib
 		String();
 		String(const char* value);
 
+		String(const acclib::String& other);
+
 		int index_of(const char& value);
 
 		void concatenate(const char* value);
@@ -40,6 +42,9 @@ namespace acclib
 
 		~String();
 	private:
+		void copy_to_buffer(const size_t& start_position, const acclib::String& value);
+		void copy_to_buffer(const size_t& start_position, const char* value);
+
 		acclib::vector<char> m_buffer;
 	};
 }
