@@ -67,7 +67,15 @@ namespace acclib
 			++m_size;
 		}
 
-		T& operator[](size_t index)
+		T at(const size_t& index) const
+		{
+			if (index >= m_size)
+				throw std::invalid_argument("index must be smaller than m_size.");
+
+			return m_buffer[index];
+		}
+
+		T& operator[](const size_t& index)
 		{
 			if (index >= m_size)
 				throw std::invalid_argument("index must be smaller than m_size.");

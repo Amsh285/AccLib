@@ -139,6 +139,7 @@ int main()
 	test5 += 'a';
 
 	acclib::String test;
+	acclib::String foo;
 	/*std::cout << "Test: " << test << std::endl;*/
 	std::cout << "Hello World!\n";
 }

@@ -13,7 +13,7 @@ acclib::String::String(const char* value)
 
 int acclib::String::index_of(const char& value)
 {
-	for (size_t i = 0; i < m_buffer.size(); i++)
+	for (size_t i = 0; i < m_buffer.size(); ++i)
 		if (m_buffer[i] == value)
 			return i;
 
@@ -22,15 +22,46 @@ int acclib::String::index_of(const char& value)
 
 void acclib::String::concatenate(const char* value)
 {
-	size_t terminator_position = index_of('\0');
+	if (strlen(value) > 0)
+	{
+		size_t terminator_position = index_of('\0');
 
-	for (size_t i = terminator_position; i < strlen(value); i++)
-		m_buffer.push_back(value[i]);
+		m_buffer[terminator_position] = value[0];
 
-	m_buffer.push_back('\0');
+		for (size_t i = terminator_position + 1; i < strlen(value); i++)
+			m_buffer.push_back(value[i]);
+
+		m_buffer.push_back('\0');
+	}
+}
+
+char& acclib::String::operator[](size_t index)
+{
+	return m_buffer[index];
+}
+
+bool acclib::String::operator==(const char* value)
+{
+	if (strlen(value) != length())
+		return false;
+
+	for (size_t i = 0; i < strlen(value); ++i)
+		if (value[i] != m_buffer[i])
+			return false;
+
+	return true;
+}
+
+const char* acclib::String::c_str() const
+{
+	char* copy = new char[m_buffer.size()];
+
+	for (size_t i = 0; i < m_buffer.size(); ++i)
+		copy[i] = m_buffer.at(i);
+	 
+	return copy;
 }
 
 acclib::String::~String()
 {
-	m_buffer.~vector();
 }

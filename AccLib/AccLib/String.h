@@ -16,31 +16,30 @@ namespace acclib
 	public:
 		static constexpr size_t npos = std::numeric_limits<size_t>::max();
 
+		// Gets the length of the string excluding the terminator symbol \0
+		size_t length() const { return m_buffer.size() - 1; };
+
+		// Gets the used size in m_buffer
+		size_t size() const { return m_buffer.size(); };
+
 		String();
 		String(const char* value);
-		
+
 		int index_of(const char& value);
 
 		void concatenate(const char* value);
 
+		char& operator[](size_t index);
+		bool operator==(const char* value);
+
+		// https://www.cplusplus.com/reference/string/string/c_str/
+		// Returns a char ptr with the string content in m_buffer.
+		// This string should be deleted after its usage because it will be created
+		// on the heap.
+		const char* c_str() const;
+
 		~String();
 	private:
-		
-
-		// Erstellung eines Strings mit const char*
-		// 
-		// darf man intern einen non const buffer verwenden?
-
-		/*const char* val = "hallo";
-		std::string test5(val);
-		test5 += 'a';*/
-
-		// würde sinn machen weil der string verändert werden kann.
-		// Die Änderung wirkt sich aber nicht auf val aus.
-		// Alternative wäre immer neue strings zu erstellen mit new,
-		// aber das wirkt sich dann auf den Performance constraint aus.
-		// Mit realloc muss man den alten string nicht immer wieder kopieren,
-		// weil der speicher einfach nur vergrößert wird.
 		acclib::vector<char> m_buffer;
 	};
 }
