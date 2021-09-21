@@ -33,6 +33,17 @@ namespace acclib
 				m_buffer[i] = other.m_buffer[i];
 		}
 
+		vector(acclib::vector<T>&& other)
+		{
+			m_size = other.m_size;
+			m_capacity = other.m_capacity;
+			m_buffer = other.m_buffer;
+
+			other.m_size = 0;
+			other.m_capacity = 0;
+			other.m_buffer = nullptr;
+		}
+
 		void resize(const size_t& capacity)
 		{
 			T* temp = new T[capacity];
@@ -68,7 +79,7 @@ namespace acclib
 			++m_size;
 		}
 
-		T at(const size_t& index) const
+		T& at(const size_t& index) const
 		{
 			if (index >= m_size)
 				throw std::invalid_argument("index must be smaller than m_size.");
@@ -76,11 +87,10 @@ namespace acclib
 			return m_buffer[index];
 		}
 
+		// Allows unsafe access to m_buffer. using indizes above of size() could lead to
+		// overidden values when push_back is used after. Use at if for safe usage.
 		T& operator[](const size_t& index)
 		{
-			if (index >= m_size)
-				throw std::invalid_argument("index must be smaller than m_size.");
-
 			return m_buffer[index];
 		}
 

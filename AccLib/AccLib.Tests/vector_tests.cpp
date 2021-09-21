@@ -41,6 +41,20 @@ namespace AccLibTests
 			Assert::AreEqual(12, sut[0]);
 		}
 
+		TEST_METHOD(vector_move_ctor)
+		{
+			acclib::vector<int> pseudo_rvalue = acclib::vector<int>(12);
+			acclib::vector<int> asd = std::move(pseudo_rvalue);
+			/*asd[0] = 123;*/
+			// das hier funktioniert nicht unbedingt weil size nicht wie in push_back erhöht wird
+			asd.push_back(123);
+
+
+			Assert::AreEqual(0, (int)pseudo_rvalue.capacity());
+			Assert::AreEqual(0, (int)pseudo_rvalue.size());
+			/*Assert::IsTrue(pseudo_rvalue.m_);*/
+		}
+
 		TEST_METHOD(vector_copy_assignment)
 		{
 			acclib::vector<int> other;
@@ -80,16 +94,6 @@ namespace AccLibTests
 
 			Assert::AreEqual(2, (int)sut.size());
 			Assert::AreEqual(2, (int)sut.capacity());
-		}
-
-		TEST_METHOD(vector_access_with_invalid_index_throws)
-		{
-			auto func = [] {
-				acclib::vector<int> sut(2);
-				int a = sut[2];
-			};
-
-			Assert::ExpectException<std::invalid_argument>(func);
 		}
 
 		TEST_METHOD(vector_can_write)
