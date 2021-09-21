@@ -22,16 +22,22 @@ namespace acclib
 		// Gets the used size in m_buffer
 		size_t size() const { return m_buffer.size(); };
 
+		const acclib::vector<char>& buffer() const { return m_buffer; };
+
 		String();
 		String(const char* value);
 
 		String(const acclib::String& other);
+		String(acclib::String&& value) noexcept;
 
 		int index_of(const char& value);
 
 		void concatenate(const char* value);
 
 		char& operator[](size_t index);
+
+		acclib::String& operator=(const acclib::String& other);
+
 		bool operator==(const char* value);
 
 		// https://www.cplusplus.com/reference/string/string/c_str/

@@ -23,19 +23,39 @@ namespace AccLibTests
 		{
 			acclib::String other("hallo Welt");
 			acclib::String sut = other;
+
+			Assert::AreEqual(other[0], sut[0]);
+			Assert::AreEqual(other.size(), sut.size());
+			Assert::AreEqual(other.length(), sut.length());
+
 			sut[0] = '$';
 
 			Assert::AreEqual('h', other[0]);
 			Assert::AreEqual('$', sut[0]);
 		}
 
+		TEST_METHOD(string_move_ctor)
+		{
+			acclib::String pseudo_rvalue("test");
+			acclib::String sut = std::move(pseudo_rvalue);
+
+			Assert::IsTrue(sut == "test");
+
+			const acclib::vector<char>& r_buffer = pseudo_rvalue.buffer();
+
+			Assert::AreEqual(0, (int)r_buffer.capacity());
+			Assert::AreEqual(0, (int)r_buffer.size());
+			Assert::IsTrue(r_buffer.buffer() == nullptr);
+		}
+
 		TEST_METHOD(string_copy_assignment)
 		{
 			acclib::String other = "Hoi";
-
 			acclib::String sut;
-			//Todo: check if sut clears the first vector after copy assignment
 			sut = other;
+
+			Assert::IsTrue(other == "Hoi");
+			Assert::IsTrue(sut == "Hoi");
 
 			sut[0] = 'B';
 

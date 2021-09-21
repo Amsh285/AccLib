@@ -12,6 +12,8 @@ namespace acclib
 
 		size_t size() const { return m_size; };
 
+		const T* buffer() const { return m_buffer; };
+
 		vector()
 			: vector(20)
 		{
@@ -33,7 +35,7 @@ namespace acclib
 				m_buffer[i] = other.m_buffer[i];
 		}
 
-		vector(acclib::vector<T>&& other)
+		vector(acclib::vector<T>&& other) noexcept
 		{
 			m_size = other.m_size;
 			m_capacity = other.m_capacity;
@@ -87,7 +89,7 @@ namespace acclib
 			return m_buffer[index];
 		}
 
-		// Allows unsafe access to m_buffer. using indizes above of size() could lead to
+		// Allows unsafe access to m_buffer. using indizes above size() could lead to
 		// overidden values when push_back is used after. Use at if for safe usage.
 		T& operator[](const size_t& index)
 		{

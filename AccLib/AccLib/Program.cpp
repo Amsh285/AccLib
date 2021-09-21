@@ -52,24 +52,6 @@ void print_vectors(const std::vector<T>& value)
 int main()
 {
 	const char* test1 = "hoi";
-
-	char* test2 = new char[20];
-	test2[0] = 'h';
-	test2[1] = 'o';
-	test2[2] = 'i';
-	test2[3] = '\0';
-
-	char* test3 = new char[20];
-	test3[0] = 'h';
-	test3[1] = 'o';
-	test3[2] = 'i';
-	test3[19] = '\0';
-	/*hoi vs hoiÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ erstere variante dürfte die bessere sein.*/
-
-	/*int* arr = (int*)malloc(sizeof(int) * 3);
-	arr[0] = 2;
-	arr[1] = 3;
-	arr[2] = 4;*/
 	
 	std::vector<int> first;
 	first.push_back(1);

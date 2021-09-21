@@ -12,8 +12,13 @@ acclib::String::String(const char* value)
 }
 
 acclib::String::String(const acclib::String& other)
+	: m_buffer(other.m_buffer)
 {
-	copy_to_buffer(0, other);
+}
+
+acclib::String::String(acclib::String&& value) noexcept
+	: m_buffer(std::move(value.m_buffer))
+{
 }
 
 int acclib::String::index_of(const char& value)
@@ -42,6 +47,14 @@ char& acclib::String::operator[](size_t index)
 	return m_buffer[index];
 }
 
+acclib::String& acclib::String::operator=(const acclib::String& other)
+{
+	if (this != &other)
+		m_buffer = other.m_buffer;
+
+	return *this;
+}
+
 bool acclib::String::operator==(const char* value)
 {
 	if (strlen(value) != length())
@@ -60,7 +73,7 @@ const char* acclib::String::c_str() const
 
 	for (size_t i = 0; i < m_buffer.size(); ++i)
 		copy[i] = m_buffer.at(i);
-	 
+
 	return copy;
 }
 

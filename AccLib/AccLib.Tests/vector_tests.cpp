@@ -44,15 +44,16 @@ namespace AccLibTests
 		TEST_METHOD(vector_move_ctor)
 		{
 			acclib::vector<int> pseudo_rvalue = acclib::vector<int>(12);
-			acclib::vector<int> asd = std::move(pseudo_rvalue);
-			/*asd[0] = 123;*/
-			// das hier funktioniert nicht unbedingt weil size nicht wie in push_back erhöht wird
-			asd.push_back(123);
-
+			acclib::vector<int> sut = std::move(pseudo_rvalue);
+			sut.push_back(123);
 
 			Assert::AreEqual(0, (int)pseudo_rvalue.capacity());
 			Assert::AreEqual(0, (int)pseudo_rvalue.size());
-			/*Assert::IsTrue(pseudo_rvalue.m_);*/
+			Assert::IsTrue(pseudo_rvalue.buffer() == nullptr);
+
+			Assert::AreEqual(123, sut.at(0));
+			Assert::AreEqual(1, (int)sut.size());
+			Assert::AreEqual(12, (int)sut.capacity());
 		}
 
 		TEST_METHOD(vector_copy_assignment)
@@ -98,7 +99,6 @@ namespace AccLibTests
 
 		TEST_METHOD(vector_can_write)
 		{
-			//acclib::vector<char> vec(); wieso geht das nicht?
 			acclib::vector<char> sut;
 			sut.push_back('a');
 			sut.push_back('b');
