@@ -37,6 +37,7 @@ namespace acclib
 		char& operator[](size_t index);
 
 		acclib::String& operator=(const acclib::String& other);
+		acclib::String& operator=(acclib::String&& other) noexcept;
 
 		bool operator==(const char* value);
 

@@ -72,6 +72,23 @@ namespace AccLibTests
 			Assert::AreEqual(100, sut[0]);
 		}
 
+		TEST_METHOD(vector_move_assignment)
+		{
+			acclib::vector<int> pseudo_rvalue = acclib::vector<int>(12);
+			acclib::vector<int> sut = acclib::vector<int>();
+			pseudo_rvalue.push_back(123);
+
+			sut = std::move(pseudo_rvalue);
+
+			Assert::AreEqual(0, (int)pseudo_rvalue.capacity());
+			Assert::AreEqual(0, (int)pseudo_rvalue.size());
+			Assert::IsTrue(pseudo_rvalue.buffer() == nullptr);
+
+			Assert::AreEqual(123, sut.at(0));
+			Assert::AreEqual(1, (int)sut.size());
+			Assert::AreEqual(12, (int)sut.capacity());
+		}
+
 		TEST_METHOD(vector_can_grow)
 		{
 			test_growth(0);

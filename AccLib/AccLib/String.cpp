@@ -55,6 +55,12 @@ acclib::String& acclib::String::operator=(const acclib::String& other)
 	return *this;
 }
 
+acclib::String& acclib::String::operator=(acclib::String&& other) noexcept
+{
+	m_buffer = std::move(other.m_buffer);
+	return *this;
+}
+
 bool acclib::String::operator==(const char* value)
 {
 	if (strlen(value) != length())

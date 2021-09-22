@@ -114,6 +114,24 @@ namespace acclib
 			return *this;
 		}
 
+		acclib::vector<T>& operator=(acclib::vector<T>&& other) noexcept
+		{
+			if (this != &other)
+			{
+				delete[] m_buffer;
+
+				m_buffer = other.m_buffer;
+				m_size = other.m_size;
+				m_capacity = other.m_capacity;
+
+				other.m_buffer = nullptr;
+				other.m_size = 0;
+				other.m_capacity = 0;
+			}
+
+			return *this;
+		}
+
 		~vector()
 		{
 			delete[] m_buffer;
