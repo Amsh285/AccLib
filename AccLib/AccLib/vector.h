@@ -50,6 +50,7 @@ namespace acclib
 		{
 			T* temp = new T[capacity];
 
+			// Falls die kapazität verkleinert wird.
 			size_t read_size = m_size < capacity ? m_size: capacity;
 
 			for (std::size_t i = 0; i < read_size; ++i)
@@ -65,21 +66,27 @@ namespace acclib
 		void push_back(T value)
 		{
 			if (m_size >= m_capacity)
-			{
-				size_t growth = m_capacity * 0.5f;
-				size_t new_size = m_capacity + growth + 1;
-
-				// https://stackoverflow.com/questions/206405/overflows-in-size-t-additions
-				// https://stackoverflow.com/questions/7749066/how-to-catch-out-of-memory-exception-in-c/13327733
-				if (new_size < m_capacity)
-					throw std::overflow_error("New capacity overflows maximum. Element cannot be added.");
-
-				resize(new_size);
-			}
+				resize(get_new_capacity());
 
 			m_buffer[m_size] = value;
 			++m_size;
 		}
+
+		/*void copy_to(const T& source, const size_t& start_position, const size_t& item_count)
+		{
+			if (item_count == 0)
+				return;
+
+			size_t lastIndex = start_position + item_count - 1;
+
+			while (start_position >= m_capacity || lastIndex >= m_capacity)
+				resize(get_new_capacity());
+
+			for (size_t i = 0; i < item_count; i++)
+			{
+
+			}
+		}*/
 
 		T& at(const size_t& index) const
 		{
@@ -138,6 +145,19 @@ namespace acclib
 		}
 
 	private:
+		size_t get_new_capacity()
+		{
+			size_t growth = m_capacity * 0.5f;
+			size_t new_capacity = m_capacity + growth + 1;
+
+			// https://stackoverflow.com/questions/206405/overflows-in-size-t-additions
+			// https://stackoverflow.com/questions/7749066/how-to-catch-out-of-memory-exception-in-c/13327733
+			if (new_capacity < m_capacity)
+				throw std::overflow_error("New capacity overflows maximum. Element cannot be added.");
+
+			return new_capacity;
+		}
+
 		T* m_buffer;
 		size_t m_capacity;
 		size_t m_size;

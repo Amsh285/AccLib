@@ -78,6 +78,32 @@ namespace AccLibTests
 			Assert::IsTrue(r_buffer.buffer() == nullptr);
 		}
 
+		TEST_METHOD(string_plus_operator)
+		{
+			acclib::String sut = "Hallo ";
+			sut = sut + "Welt";
+
+			Assert::IsTrue(sut == "Hallo Welt");
+
+			sut = "Hallo ";
+			Assert::IsTrue(sut == "Hallo ");
+
+			sut = sut + acclib::String("Welt");
+			Assert::IsTrue(sut == "Hallo Welt");
+		}
+
+		TEST_METHOD(string_plus_assignment_operator)
+		{
+			acclib::String temp = "lt";
+			acclib::String sut = "Hallo ";
+
+			sut += "We";
+			Assert::IsTrue(sut == "Hallo We");
+
+			sut += temp;
+			Assert::IsTrue(sut == "Hallo Welt");
+		}
+
 		TEST_METHOD(string_init_with_value)
 		{
 			const char* expected_value = "Hallo Welt";

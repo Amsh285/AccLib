@@ -30,15 +30,25 @@ int acclib::String::index_of(const char& value)
 	return acclib::String::npos;
 }
 
+void acclib::String::concatenate(const acclib::String& value)
+{
+	concatenate(value.m_buffer.buffer());
+}
+
 void acclib::String::concatenate(const char* value)
 {
 	if (strlen(value) > 0)
 	{
 		size_t terminator_position = index_of('\0');
 
+		// override \0 terminator
 		m_buffer[terminator_position] = value[0];
 
-		copy_to_buffer(terminator_position + 1, value);
+		// override remaining chars
+		for (size_t i = 1; i < strlen(value); ++i)
+			m_buffer.push_back(value[i]);
+
+		m_buffer.push_back('\0');
 	}
 }
 
@@ -73,6 +83,34 @@ bool acclib::String::operator==(const char* value)
 	return true;
 }
 
+acclib::String acclib::String::operator+(const acclib::String& other)
+{
+	// bin nicht ganz zufrieden damit weil man auf die buffer nicht public zugreifen können
+	// sollte, aber kopieren oder redundanter code ist auch keine gute lösung.
+	acclib::String result = *this + other.m_buffer.buffer();
+	return result;
+}
+
+acclib::String acclib::String::operator+(const char* other)
+{
+	acclib::String result = *this;
+	result.concatenate(other);
+
+	return result;
+}
+
+acclib::String acclib::String::operator+=(const acclib::String& other)
+{
+	*this += other.m_buffer.buffer();
+	return *this;
+}
+
+acclib::String acclib::String::operator+=(const char* other)
+{
+	concatenate(other);
+	return *this;
+}
+
 const char* acclib::String::c_str() const
 {
 	char* copy = new char[m_buffer.size()];
@@ -85,18 +123,4 @@ const char* acclib::String::c_str() const
 
 acclib::String::~String()
 {
-}
-
-void acclib::String::copy_to_buffer(const size_t& start_position, const acclib::String& value)
-{
-	for (size_t i = start_position; i < value.size(); ++i)
-		m_buffer.push_back(value.m_buffer.at(i));
-}
-
-void acclib::String::copy_to_buffer(const size_t& start_position, const char* value)
-{
-	for (size_t i = start_position; i < strlen(value); ++i)
-		m_buffer.push_back(value[i]);
-
-	m_buffer.push_back('\0');
 }

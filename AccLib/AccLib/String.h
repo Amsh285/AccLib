@@ -32,6 +32,7 @@ namespace acclib
 
 		int index_of(const char& value);
 
+		void concatenate(const acclib::String& value);
 		void concatenate(const char* value);
 
 		char& operator[](size_t index);
@@ -41,6 +42,12 @@ namespace acclib
 
 		bool operator==(const char* value);
 
+		acclib::String operator+(const acclib::String& other);
+		acclib::String operator+(const char* other);
+
+		acclib::String operator+=(const acclib::String& other);
+		acclib::String operator+=(const char* other);
+
 		// https://www.cplusplus.com/reference/string/string/c_str/
 		// Returns a char ptr with the string content in m_buffer.
 		// This string should be deleted after its usage because it will be created
@@ -49,9 +56,6 @@ namespace acclib
 
 		~String();
 	private:
-		void copy_to_buffer(const size_t& start_position, const acclib::String& value);
-		void copy_to_buffer(const size_t& start_position, const char* value);
-
 		acclib::vector<char> m_buffer;
 	};
 }
