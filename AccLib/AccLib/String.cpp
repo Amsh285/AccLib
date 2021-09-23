@@ -113,9 +113,10 @@ acclib::String acclib::String::operator+=(const char* other)
 
 const char* acclib::String::c_str() const
 {
-	char* copy = new char[m_buffer.size()];
+	const size_t buffer_size = m_buffer.size();
+	char* copy = new char[buffer_size];
 
-	for (size_t i = 0; i < m_buffer.size(); ++i)
+	for (size_t i = 0; i < buffer_size; ++i)
 		copy[i] = m_buffer.at(i);
 
 	return copy;

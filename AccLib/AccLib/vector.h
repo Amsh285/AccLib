@@ -29,6 +29,9 @@ namespace acclib
 		vector(const acclib::vector<T>& other)
 			: m_size(other.m_size), m_capacity(other.m_capacity)
 		{
+			if (other.m_size > other.m_capacity)
+				throw std::invalid_argument("size cannot be larger than capacity.");
+
 			m_buffer = new T[other.m_capacity];
 
 			for (size_t i = 0; i < other.m_size; ++i)
@@ -51,7 +54,7 @@ namespace acclib
 			T* temp = new T[capacity];
 
 			// Falls die kapazität verkleinert wird.
-			size_t read_size = m_size < capacity ? m_size: capacity;
+			size_t read_size = m_size < capacity ? m_size : capacity;
 
 			for (std::size_t i = 0; i < read_size; ++i)
 				temp[i] = m_buffer[i];
@@ -105,6 +108,9 @@ namespace acclib
 
 		acclib::vector<T>& operator=(const acclib::vector<T>& other)
 		{
+			if (other.m_size > other.m_capacity)
+				throw std::invalid_argument("size cannot be larger than capacity.");
+
 			// https://en.cppreference.com/w/cpp/language/copy_assignment
 			if (this != &other)
 			{
@@ -113,7 +119,7 @@ namespace acclib
 				m_buffer = new T[other.capacity()];
 				m_size = other.size();
 				m_capacity = other.capacity();
-				
+
 				for (size_t i = 0; i < other.size(); ++i)
 					m_buffer[i] = other.at(i);
 			}
