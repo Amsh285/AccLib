@@ -51,6 +51,9 @@ void print_vectors(const std::vector<T>& value)
 
 int main()
 {
+	std::vector<int> vec;
+	vec.at(0);
+
 	const char* test1 = "hoi";
 	
 	std::vector<int> first;

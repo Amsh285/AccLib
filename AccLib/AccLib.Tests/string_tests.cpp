@@ -28,7 +28,9 @@ namespace AccLibTests
 			Assert::AreEqual(other.size(), sut.size());
 			Assert::AreEqual(other.length(), sut.length());
 
-			sut[0] = '$';
+			sut.at(0) = '$';
+
+			char s = sut[0];
 
 			Assert::AreEqual('h', other[0]);
 			Assert::AreEqual('$', sut[0]);
@@ -57,7 +59,7 @@ namespace AccLibTests
 			Assert::IsTrue(other == "Hoi");
 			Assert::IsTrue(sut == "Hoi");
 
-			sut[0] = 'B';
+			sut.at(0) = 'B';
 
 			Assert::IsTrue(other == "Hoi");
 			Assert::IsTrue(sut == "Boi");
@@ -122,8 +124,6 @@ namespace AccLibTests
 			const char* str = sut.c_str();
 
 			Assert::IsTrue(sut == str);
-
-			delete str;
 		}
 	};
 }

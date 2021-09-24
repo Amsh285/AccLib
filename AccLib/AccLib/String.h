@@ -7,8 +7,6 @@
 
 #include "vector.h"
 
-#define MaxLength INT_MAX - 1
-
 namespace acclib
 {
 	class String
@@ -35,7 +33,7 @@ namespace acclib
 		void concatenate(const acclib::String& value);
 		void concatenate(const char* value);
 
-		char& operator[](size_t index);
+		char& at(size_t index);
 
 		acclib::String& operator=(const acclib::String& other);
 		acclib::String& operator=(acclib::String&& other) noexcept;
@@ -48,10 +46,7 @@ namespace acclib
 		acclib::String operator+=(const acclib::String& other);
 		acclib::String operator+=(const char* other);
 
-		// https://www.cplusplus.com/reference/string/string/c_str/
-		// Returns a char ptr with the string content in m_buffer.
-		// This string should be deleted after its usage because it will be created
-		// on the heap.
+		operator const char*();
 		const char* c_str() const;
 
 		~String();

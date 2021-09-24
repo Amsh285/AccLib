@@ -52,9 +52,12 @@ void acclib::String::concatenate(const char* value)
 	}
 }
 
-char& acclib::String::operator[](size_t index)
+char& acclib::String::at(size_t index)
 {
-	return m_buffer[index];
+	if (index >= size())
+		throw std::invalid_argument("index must be smaller than size().");
+
+	return m_buffer.at(index);
 }
 
 acclib::String& acclib::String::operator=(const acclib::String& other)
@@ -111,15 +114,14 @@ acclib::String acclib::String::operator+=(const char* other)
 	return *this;
 }
 
+acclib::String::operator const char*()
+{
+	return c_str();
+}
+
 const char* acclib::String::c_str() const
 {
-	const size_t buffer_size = m_buffer.size();
-	char* copy = new char[buffer_size];
-
-	for (size_t i = 0; i < buffer_size; ++i)
-		copy[i] = m_buffer.at(i);
-
-	return copy;
+	return m_buffer.buffer();
 }
 
 acclib::String::~String()
