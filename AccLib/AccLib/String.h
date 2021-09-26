@@ -7,8 +7,6 @@
 
 #include "vector.h"
 
-#define MaxLength INT_MAX - 1
-
 namespace acclib
 {
 	class String
@@ -16,31 +14,43 @@ namespace acclib
 	public:
 		static constexpr size_t npos = std::numeric_limits<size_t>::max();
 
+		// Gets the length of the string excluding the terminator symbol \0
+		size_t length() const { return m_buffer.size() - 1; };
+
+		// Gets the used size in m_buffer
+		size_t size() const { return m_buffer.size(); };
+
+		const acclib::vector<char>& buffer() const { return m_buffer; };
+
 		String();
 		String(const char* value);
-		
+
+		String(const acclib::String& other);
+		String(acclib::String&& value) noexcept;
+
 		int index_of(const char& value);
 
+		void concatenate(const acclib::String& value);
 		void concatenate(const char* value);
+
+		char& at(size_t index);
+
+		acclib::String& operator=(const acclib::String& other);
+		acclib::String& operator=(acclib::String&& other) noexcept;
+
+		bool operator==(const char* value);
+
+		acclib::String operator+(const acclib::String& other);
+		acclib::String operator+(const char* other);
+
+		acclib::String operator+=(const acclib::String& other);
+		acclib::String operator+=(const char* other);
+
+		operator const char*();
+		const char* c_str() const;
 
 		~String();
 	private:
-		
-
-		// Erstellung eines Strings mit const char*
-		// 
-		// darf man intern einen non const buffer verwenden?
-
-		/*const char* val = "hallo";
-		std::string test5(val);
-		test5 += 'a';*/
-
-		// würde sinn machen weil der string verändert werden kann.
-		// Die Änderung wirkt sich aber nicht auf val aus.
-		// Alternative wäre immer neue strings zu erstellen mit new,
-		// aber das wirkt sich dann auf den Performance constraint aus.
-		// Mit realloc muss man den alten string nicht immer wieder kopieren,
-		// weil der speicher einfach nur vergrößert wird.
 		acclib::vector<char> m_buffer;
 	};
 }

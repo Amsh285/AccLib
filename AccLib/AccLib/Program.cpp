@@ -38,72 +38,34 @@ public:
 	{};
 };
 
+template<class T>
+void print_vectors(const std::vector<T>& value)
+{
+	std::cout << "vec: [ ";
+
+	for (size_t i = 0; i < value.size(); ++i)
+		std::cout << value[i] << " ";
+
+	std::cout << "]" << std::endl;
+}
 
 int main()
 {
-	const char* test1 = "hoi";
-
-#pragma region stupidstuff
-	// 4611686018427387903
-	// 18.446.744.073.709.551.615 auf einer 64 bit architektur
-	// 4611686018427387903 * 4 = 18 446 744 073 709 551 612
-	// passiert wahrscheinlich wegen aufteilung: 
-	// 18.446.744.073.709.551.615 / 4 = 4 611 686 018 427 387 903,75
-	// (wird wsl abgerundet)
-	// 
-	// 
-	// 
-	// 2305843009213693951
-	// für x64 architektur
-
-	// x86
-	// 1 073 741 823 * 4 = 4.294.967.292 (4294967295 / 4 =  1 073 741 823,75)
-	// wieder das rundungsproblem
 	std::vector<int> vec;
-	std::cout << vec.max_size() << std::endl;
+	vec.at(0);
 
-	// 536870911 * 8 = 4.294.967.288 -> wieder rundungsfehler
-	std::vector<double> vec2;
-	std::cout << vec2.max_size() << std::endl;
-	// unsigned int	32	0	4.294.967.295	32 Bit, 4 Byte
-	// http://www.mrknowing.com/2013/10/08/datentypen-in-c-wertebereich-und-speichergroesse/
+	const char* test1 = "hoi";
 	
-	// zusammenfassend kann man davon ausgehen das der std::vector also 
-	// für 32 bit architekturen 2^32 elemente  und für 64 bit architekturen
-	// 2^64 elemente zulässt wenn die elemente 1 byte groß wären
-	// deshalb werden die 2^n elemente noch durch sizeof(_Ty) dividiert dabei kommt es
-	// zu rundungsfehlern, die kann man wohl in kauf nehmen
+	std::vector<int> first;
+	first.push_back(1);
+	first.push_back(2);
+	first.push_back(3);
 
-	// https://stackoverflow.com/questions/3813124/c-vector-max-size
-	// scheint so zu stimmen
-	std::vector<char> vec3;
-	std::cout << vec3.max_size() << std::endl;
-	// 2147483647
+	std::vector<int> second = first;
+	second[1] = 15;
 
-	std::cout << "sizeof foo: " << sizeof(foo) << std::endl;
-	std::cout << "sizeof bar: " << sizeof(bar) << std::endl;
-
-	std::cout << UINT32_MAX << std::endl;
-#pragma endregion stupidstuff
-
-	char* test2 = new char[20];
-	test2[0] = 'h';
-	test2[1] = 'o';
-	test2[2] = 'i';
-	test2[3] = '\0';
-
-	char* test3 = new char[20];
-	test3[0] = 'h';
-	test3[1] = 'o';
-	test3[2] = 'i';
-	test3[19] = '\0';
-	/*hoi vs hoiÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ erstere variante dürfte die bessere sein.*/
-
-	/*int* arr = (int*)malloc(sizeof(int) * 3);
-	arr[0] = 2;
-	arr[1] = 3;
-	arr[2] = 4;*/
-	
+	print_vectors(first);
+	print_vectors(second);
 
 	/*acclib::vector<int> acc_vec(3);
 	acc_vec.push_back(12);*/
@@ -139,6 +101,7 @@ int main()
 	test5 += 'a';
 
 	acclib::String test;
+	acclib::String foo;
 	/*std::cout << "Test: " << test << std::endl;*/
 	std::cout << "Hello World!\n";
 }
