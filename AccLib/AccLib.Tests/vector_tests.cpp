@@ -126,6 +126,24 @@ namespace AccLibTests
 			Assert::AreEqual('d', sut[2]);
 		}
 
+		TEST_METHOD(vector_iterator)
+		{
+			int expected = 1;
+
+			acclib::vector<int> sut;
+			sut.push_back(1);
+			sut.push_back(2);
+			sut.push_back(3);
+			sut.push_back(4);
+
+			for (acclib::vector<int>::iterator<int> it = sut.begin(); it != sut.end(); ++it)
+			{
+				int actual = *it;
+				Assert::AreEqual(expected, actual);
+				++expected;
+			}
+		}
+
 	private:
 		void test_growth(size_t initialcapacity)
 		{

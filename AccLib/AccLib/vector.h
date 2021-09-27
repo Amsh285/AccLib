@@ -8,11 +8,65 @@ namespace acclib
 	class vector
 	{
 	public:
+
+		template <class T>
+		class iterator
+		{
+		public:
+			iterator(T* ptr) :
+				ptr(ptr)
+			{
+			}
+
+			bool operator!=(const iterator<T>& other)
+			{
+				return ptr != other.ptr;
+			}
+
+			bool operator==(const iterator<T>& other)
+			{
+				return ptr == other.ptr;
+			}
+
+			iterator<T>& operator++()
+			{
+				++ptr;
+				return *this;
+			}
+
+			iterator<T> operator++(int)
+			{
+				iterator<T> temp = *this;
+				++(*this);
+				return *this;
+			}
+
+			iterator<T>& operator--()
+			{
+				--ptr;
+				return *this;
+			}
+
+			iterator<T> operator--(int)
+			{
+				iterator<T> temp = *this;
+				--(*this);
+				return *this;
+			}
+
+			T& operator*()
+			{
+				return *ptr;
+			}
+		private:
+			T* ptr;
+		};
+
 		size_t capacity() const { return m_capacity; };
 
 		size_t size() const { return m_size; };
 
-		const T* buffer() const { return m_buffer; };
+		T* buffer() const { return m_buffer; };
 
 		vector()
 			: vector(20)
@@ -75,28 +129,22 @@ namespace acclib
 			++m_size;
 		}
 
-		/*void copy_to(const T& source, const size_t& start_position, const size_t& item_count)
-		{
-			if (item_count == 0)
-				return;
-
-			size_t lastIndex = start_position + item_count - 1;
-
-			while (start_position >= m_capacity || lastIndex >= m_capacity)
-				resize(get_new_capacity());
-
-			for (size_t i = 0; i < item_count; i++)
-			{
-
-			}
-		}*/
-
 		T& at(const size_t& index) const
 		{
 			if (index >= m_size)
 				throw std::invalid_argument("index must be smaller than m_size.");
 
 			return m_buffer[index];
+		}
+
+		iterator<T> begin()
+		{
+			return iterator<T>(m_buffer);
+		}
+
+		iterator<T> end()
+		{
+			return iterator<T>(m_buffer + m_size);
 		}
 
 		// Allows unsafe access to m_buffer. using indizes above size() could lead to
