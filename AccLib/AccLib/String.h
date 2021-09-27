@@ -12,6 +12,8 @@ namespace acclib
 	class String
 	{
 	public:
+		using string_iterator = acclib::vector<char>::iterator<char>;
+
 		static constexpr size_t npos = std::numeric_limits<size_t>::max();
 
 		// Gets the length of the string excluding the terminator symbol \0
@@ -48,6 +50,16 @@ namespace acclib
 
 		operator const char*();
 		const char* c_str() const;
+
+		string_iterator begin()
+		{
+			return string_iterator(m_buffer.buffer());
+		}
+
+		string_iterator end()
+		{
+			return string_iterator(m_buffer.buffer() + length());
+		}
 
 		~String();
 	private:

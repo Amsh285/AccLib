@@ -118,6 +118,20 @@ namespace AccLibTests
 			Assert::IsTrue(sut == expected_value);
 		}
 
+		TEST_METHOD(string_iterator)
+		{
+			const char* expected = "Hallo";
+			int i = 0;
+
+			acclib::String sut(expected);
+
+			for (acclib::String::string_iterator it = sut.begin(); it != sut.end(); ++it)
+			{
+				Assert::AreEqual(expected[i], *it);
+				++i;
+			}
+		}
+
 		TEST_METHOD(string_c_str)
 		{
 			acclib::String sut("i love to hate c++");
