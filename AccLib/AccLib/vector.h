@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MemoryAllocationFailedException.h"
+#include<stdexcept>
 
 namespace acclib
 {

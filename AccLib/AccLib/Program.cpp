@@ -51,19 +51,12 @@ void print_vectors(const std::vector<T>& value)
 
 int main()
 {
-	std::vector<int> vec;
-	vec.push_back(1);
-	vec.push_back(2);
-	vec.push_back(3);
-
-	for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); ++it)
-		std::cout << *it << std::endl;
-
-	for (std::vector<int>::iterator it = vec.end(); it != vec.begin(); --it)
-		std::cout << *it << std::endl;
+	std::vector<std::string> v;
+	std::string str = "example";
+	v.push_back(std::move(str));
 
 	const char* test1 = "hoi";
-	
+
 	std::vector<int> first;
 	first.push_back(1);
 	first.push_back(2);

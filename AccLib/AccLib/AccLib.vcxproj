@@ -140,14 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AssertionException.cpp" />
-    <ClCompile Include="MemoryAllocationFailedException.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="String.cpp" />
+    <ClCompile Include="unique_pointer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssertionException.h" />
-    <ClInclude Include="MemoryAllocationFailedException.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="unique_pointer.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

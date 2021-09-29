@@ -24,7 +24,7 @@
     <ClCompile Include="String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MemoryAllocationFailedException.cpp">
+    <ClCompile Include="unique_pointer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MemoryAllocationFailedException.h">
+    <ClInclude Include="unique_pointer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
