@@ -1,108 +1,86 @@
 // AccLib.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <array>
 #include <iostream>
 #include <limits>
+#include <memory>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 #include "vector.h"
 #include "String.h"
+#include "unique_pointer.h"
 
-class foo
+class entity
 {
 public:
-	int bar;
-};
+	int Id;
 
-class bar
-{
-public:
-	int foo;
-	int foo2;
-};
+	entity(int id)
+		: Id(id)
+	{
 
-class foo2
-{
-public:
-	int bar;
-	int age;
-	std::string id;
+	}
 
-	foo2()
-		: foo2("")
-	{};
+	const entity& operator()() const
+	{
+		std::cout << Id << std::endl;
+		return *this;
+	}
 
-	foo2(const char* id) 
-		: id(id), age(0), bar(0)
-	{};
+	~entity()
+	{
+		std::cout << "dtor called Id: " << Id << std::endl;
+	}
 };
 
 template<class T>
-void print_vectors(const std::vector<T>& value)
+void do_something(const T& func)
 {
-	std::cout << "vec: [ ";
+	func();
+}
 
-	for (size_t i = 0; i < value.size(); ++i)
-		std::cout << value[i] << " ";
-
-	std::cout << "]" << std::endl;
+void print_something()
+{
+	std::cout << "hallo" << std::endl;
 }
 
 int main()
 {
-	std::vector<std::string> v;
-	std::string str = "example";
-	v.push_back(std::move(str));
+	entity ent(12);
+	entity en = 12;
 
-	const char* test1 = "hoi";
+	do_something(print_something);
+	do_something(ent);
 
-	std::vector<int> first;
-	first.push_back(1);
-	first.push_back(2);
-	first.push_back(3);
+	//move deshalb dtor
+	do_something(entity(13));
 
-	std::vector<int> second = first;
-	second[1] = 15;
 
-	print_vectors(first);
-	print_vectors(second);
+	//https://stackoverflow.com/questions/36432076/how-to-check-if-a-pointer-points-to-an-array-or-single-int-or-char
 
-	/*acclib::vector<int> acc_vec(3);
-	acc_vec.push_back(12);*/
+	{
+		/*
+		void(*func)(int*) = [](int* t) {delete t; };
+		acclib::unique_pointer<int, void(int*)> ptr2(new int(13), func);
+		*/
+		/*void(*func)() = print_something;
+		func();*/
 
-	// https://isocpp.org/wiki/faq/freestore-mgmt#null-or-zero
-	// Can I use realloc() on pointers allocated via new?  
-	// No!
-	// When realloc() has to copy the allocation, it uses a bitwise copy operation, 
-	// which will tear many C++ objects to shreds.C++ objects should be allowed to copy themselves.They use their own copy constructor or assignment operator.
-	// Besides all that, the heap that new uses may not be the same as the heap that malloc() and realloc() use!
-	// Why doesn’t C++ have an equivalent to realloc() ?
+		acclib::func<int, int, int> add([](int left, int right) {return left + right; });
+		/*acclib::func<int, int, int> add = [](int left, int right) {return left + right; };*/
+		std::cout << "add called: " << add(10, 5) << std::endl;
 
-	/*
-	foo2* wtf= (foo2*)malloc(sizeof(foo2) * 3);
-	wtf[0] = foo2("1234"); */
+		/*std::unique_ptr<int> p(new int(12));*/
+		acclib::unique_pointer<int> ptr(new int(12));
+		acclib::unique_pointer<int> ptr2(new int[3]{ 1,2,3 }, acclib::default_array_deleter<int>);
+		acclib::unique_pointer<int> ptr3(new int(12), acclib::func<void, int*>([](int* target) { delete target; std::cout << "custom deleter called." << std::endl; }));
+	}
 
-	// https://stackoverflow.com/questions/38807403/using-malloc-realloc-for-array-of-classes-structs-including-std-vector
-	// 
+	std::cout << std::is_array<int*>::value << std::endl;
 
-	std::cout << std::numeric_limits<size_t>::max() << std::endl;
-	std::cout << std::numeric_limits<size_t>::max() + 1 << std::endl;
 
-	acclib::vector<foo2> acc_vec(3);
-	acc_vec.push_back(foo2("1"));
-	acc_vec.push_back(foo2("2"));
-	acc_vec.push_back(foo2("3"));
-
-	acc_vec.push_back(foo2("4"));
-
-	// standard string legt bei der konstruktion eine copy von val an.
-	const char* val = "hallo";
-	std::string test5(val);
-	test5 += 'a';
-
-	acclib::String test;
-	acclib::String foo;
-	/*std::cout << "Test: " << test << std::endl;*/
 	std::cout << "Hello World!\n";
 }
