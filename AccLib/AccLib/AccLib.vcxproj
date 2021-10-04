@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -139,15 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AssertionException.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="String.cpp" />
-    <ClCompile Include="unique_pointer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AssertionException.h" />
+    <ClInclude Include="func.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="unique_pointer.h" />
+    <ClInclude Include="utility.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -52,6 +52,13 @@ int main()
 	entity ent(12);
 	entity en = 12;
 
+	/*entity* lol = new entity(12);
+	entity* lol2 = nullptr;
+
+	bool tes = static_cast<bool>(lol); true
+	bool test2 = static_cast<bool>(lol2); false
+	*/
+
 	do_something(print_something);
 	do_something(ent);
 
@@ -75,8 +82,13 @@ int main()
 
 		/*std::unique_ptr<int> p(new int(12));*/
 		acclib::unique_pointer<int> ptr(new int(12));
-		acclib::unique_pointer<int> ptr2(new int[3]{ 1,2,3 }, acclib::default_array_deleter<int>);
+		acclib::unique_pointer<int> ptr2(new int[3]{ 1,2,3 }, acclib::default_array_deleter<int>());
 		acclib::unique_pointer<int> ptr3(new int(12), acclib::func<void, int*>([](int* target) { delete target; std::cout << "custom deleter called." << std::endl; }));
+		acclib::unique_pointer<char> ptr4(new char('a'));
+
+		/*acclib::unique_pointer<int> test;
+		acclib::unique_pointer<int> test2 = ptr;
+		test = ptr;*/
 	}
 
 	std::cout << std::is_array<int*>::value << std::endl;
