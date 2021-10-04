@@ -32,10 +32,10 @@
     <ClInclude Include="unique_pointer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="func.h">
+    <ClInclude Include="utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utility.h">
+    <ClInclude Include="func.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

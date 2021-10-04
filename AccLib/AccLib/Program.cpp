@@ -89,6 +89,11 @@ int main()
 		/*acclib::unique_pointer<int> test;
 		acclib::unique_pointer<int> test2 = ptr;
 		test = ptr;*/
+
+		
+
+		/*acclib::func<void> asdf();
+		asdf();*/
 	}
 
 	std::cout << std::is_array<int*>::value << std::endl;

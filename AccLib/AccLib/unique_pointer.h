@@ -8,16 +8,6 @@ namespace acclib
 	class unique_pointer
 	{
 	public:
-		/*unique_pointer()
-			: unique_pointer(nullptr, default_deleter<T_Element>)
-		{
-		}
-
-		unique_pointer(T_Element* ptr)
-			: unique_pointer(ptr, default_deleter<T_Element>)
-		{
-		}*/
-
 		unique_pointer()
 			: unique_pointer(nullptr, default_deleter<T_Element>())
 		{
@@ -35,7 +25,10 @@ namespace acclib
 
 		unique_pointer(const unique_pointer<T_Element, T_Deleter>& other) = delete;
 
-		unique_pointer(unique_pointer<T_Element, T_Deleter>&& other)
+
+		// https://stackoverflow.com/questions/39297334/why-does-a-move-constructor-require-a-default-constructor-for-its-members
+		unique_pointer(unique_pointer<T_Element, T_Deleter>&& other) noexcept
+			: deleter(std::move(other.deleter))
 		{
 			T_Element* moved = other.release();
 			reset(moved);
@@ -43,12 +36,15 @@ namespace acclib
 
 		unique_pointer<T_Element, T_Deleter> operator=(const unique_pointer<T_Element, T_Deleter>& other) = delete;
 
-		unique_pointer<T_Element, T_Deleter> operator=(acclib::unique_pointer<T_Element, T_Deleter>&& other)
+		unique_pointer<T_Element, T_Deleter>& operator=(acclib::unique_pointer<T_Element, T_Deleter>&& other) noexcept
 		{
 			if (this != &other)
 			{
-
+				T_Element* moved = other.release();
+				reset(moved);
 			}
+
+			return *this;
 		}
 
 		T_Element& operator*() const noexcept
@@ -92,6 +88,9 @@ namespace acclib
 		T_Deleter deleter;
 	};
 
+	/*
+	todo:
+	
 	template<class T_Element, class T_Deleter = func<void, T_Element*>>
 	unique_pointer<T_Element, T_Deleter> make_unique(T_Element value, T_Deleter deleter)
 	{
@@ -102,5 +101,5 @@ namespace acclib
 	unique_pointer<T_Element, T_Deleter> make_unique(T_Element value)
 	{
 		return make_unique(value, default_deleter<T_Element>);
-	}
+	}*/
 }
