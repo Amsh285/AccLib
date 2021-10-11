@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MemoryAllocationFailedException.h"
+#include<stdexcept>
 
 namespace acclib
 {
@@ -94,13 +94,7 @@ namespace acclib
 
 		vector(acclib::vector<T>&& other) noexcept
 		{
-			m_size = other.m_size;
-			m_capacity = other.m_capacity;
-			m_buffer = other.m_buffer;
-
-			other.m_size = 0;
-			other.m_capacity = 0;
-			other.m_buffer = nullptr;
+			move(other);
 		}
 
 		void resize(const size_t& capacity)
@@ -180,14 +174,7 @@ namespace acclib
 			if (this != &other)
 			{
 				delete[] m_buffer;
-
-				m_buffer = other.m_buffer;
-				m_size = other.m_size;
-				m_capacity = other.m_capacity;
-
-				other.m_buffer = nullptr;
-				other.m_size = 0;
-				other.m_capacity = 0;
+				move(other);
 			}
 
 			return *this;
@@ -210,6 +197,17 @@ namespace acclib
 				throw std::overflow_error("New capacity overflows maximum. Element cannot be added.");
 
 			return new_capacity;
+		}
+
+		void move(acclib::vector<T>& other)
+		{
+			m_buffer = other.m_buffer;
+			m_size = other.m_size;
+			m_capacity = other.m_capacity;
+
+			other.m_buffer = nullptr;
+			other.m_size = 0;
+			other.m_capacity = 0;
 		}
 
 		T* m_buffer;
