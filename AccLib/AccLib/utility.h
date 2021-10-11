@@ -14,15 +14,6 @@ namespace acclib
 		}
 	};
 
-	/*template<class T_Element>
-	struct default_deleter
-	{
-		T_Result operator()(T_Element* element)
-		{
-			return m_func(args...);
-		}
-	}; */
-
 	template<class T_Element>
 	class default_array_deleter : public func<void, T_Element*>
 	{
