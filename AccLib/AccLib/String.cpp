@@ -21,7 +21,7 @@ acclib::String::String(acclib::String&& value) noexcept
 {
 }
 
-int acclib::String::index_of(const char& value)
+size_t acclib::String::index_of(const char& value)
 {
 	for (size_t i = 0; i < m_buffer.size(); ++i)
 		if (m_buffer[i] == value)

@@ -9,57 +9,57 @@ namespace acclib
 	{
 	public:
 
-		template <class T>
+		template <class TPtr>
 		class iterator
 		{
 		public:
-			iterator(T* ptr) :
+			iterator(TPtr* ptr) :
 				ptr(ptr)
 			{
 			}
 
-			bool operator!=(const iterator<T>& other)
+			bool operator!=(const iterator<TPtr>& other)
 			{
 				return ptr != other.ptr;
 			}
 
-			bool operator==(const iterator<T>& other)
+			bool operator==(const iterator<TPtr>& other)
 			{
 				return ptr == other.ptr;
 			}
 
-			iterator<T>& operator++()
+			iterator<TPtr>& operator++()
 			{
 				++ptr;
 				return *this;
 			}
 
-			iterator<T> operator++(int)
+			iterator<TPtr> operator++(int)
 			{
-				iterator<T> temp = *this;
+				iterator<TPtr> temp = *this;
 				++(*this);
 				return *this;
 			}
 
-			iterator<T>& operator--()
+			iterator<TPtr>& operator--()
 			{
 				--ptr;
 				return *this;
 			}
 
-			iterator<T> operator--(int)
+			iterator<TPtr> operator--(int)
 			{
-				iterator<T> temp = *this;
+				iterator<TPtr> temp = *this;
 				--(*this);
 				return *this;
 			}
 
-			T& operator*()
+			TPtr& operator*()
 			{
 				return *ptr;
 			}
 		private:
-			T* ptr;
+			TPtr* ptr;
 		};
 
 		size_t capacity() const { return m_capacity; };
@@ -101,7 +101,7 @@ namespace acclib
 		{
 			T* temp = new T[capacity];
 
-			// Falls die kapazität verkleinert wird.
+			// Falls die kapazitï¿½t verkleinert wird.
 			size_t read_size = m_size < capacity ? m_size : capacity;
 
 			for (std::size_t i = 0; i < read_size; ++i)

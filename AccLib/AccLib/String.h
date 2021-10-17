@@ -1,6 +1,9 @@
 #pragma once
 
+#include <cstring>
+#include <limits>
 #include <utility>
+
 #include "vector.h"
 
 namespace acclib
@@ -26,7 +29,7 @@ namespace acclib
 		String(const acclib::String& other);
 		String(acclib::String&& value) noexcept;
 
-		int index_of(const char& value);
+		size_t index_of(const char& value);
 
 		void concatenate(const acclib::String& value);
 		void concatenate(const char* value);
