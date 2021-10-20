@@ -44,8 +44,9 @@ namespace acclib
 		acclib::String operator+(const acclib::String& other);
 		acclib::String operator+(const char* other);
 
-		acclib::String operator+=(const acclib::String& other);
-		acclib::String operator+=(const char* other);
+		//https://stackoverflow.com/questions/4581961/c-how-to-overload-operator
+		acclib::String& operator+=(const acclib::String& other);
+		acclib::String& operator+=(const char* other);
 
 		operator const char*();
 		const char* c_str() const;

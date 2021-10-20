@@ -102,13 +102,13 @@ acclib::String acclib::String::operator+(const char* other)
 	return result;
 }
 
-acclib::String acclib::String::operator+=(const acclib::String& other)
+acclib::String& acclib::String::operator+=(const acclib::String& other)
 {
 	*this += other.m_buffer.buffer();
 	return *this;
 }
 
-acclib::String acclib::String::operator+=(const char* other)
+acclib::String& acclib::String::operator+=(const char* other)
 {
 	concatenate(other);
 	return *this;
