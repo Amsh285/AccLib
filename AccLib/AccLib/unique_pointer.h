@@ -30,6 +30,9 @@ namespace acclib
 		unique_pointer(unique_pointer<T_Element, T_Deleter>&& other) noexcept
 			: deleter(std::move(other.deleter))
 		{
+			//stupid me...
+			ptr = nullptr;
+
 			T_Element* moved = other.release();
 			reset(moved);
 		}
@@ -57,7 +60,7 @@ namespace acclib
 			return ptr;
 		}
 
-		operator bool()
+		operator bool() const noexcept
 		{
 			return static_cast<bool>(ptr);
 		}
@@ -83,23 +86,9 @@ namespace acclib
 		{
 			deleter(ptr);
 		}
+
 	private:
 		T_Element* ptr;
 		T_Deleter deleter;
 	};
-
-	/*
-	todo:
-	
-	template<class T_Element, class T_Deleter = func<void, T_Element*>>
-	unique_pointer<T_Element, T_Deleter> make_unique(T_Element value, T_Deleter deleter)
-	{
-		return unique_pointer<T_Element, T_Deleter>(value, deleter);
-	}
-
-	template<class T_Element, class T_Deleter = func<void, T_Element*>>
-	unique_pointer<T_Element, T_Deleter> make_unique(T_Element value)
-	{
-		return make_unique(value, default_deleter<T_Element>);
-	}*/
 }

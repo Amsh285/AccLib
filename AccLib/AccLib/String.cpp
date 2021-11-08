@@ -21,7 +21,7 @@ acclib::String::String(acclib::String&& value) noexcept
 {
 }
 
-int acclib::String::index_of(const char& value)
+size_t acclib::String::index_of(const char& value)
 {
 	for (size_t i = 0; i < m_buffer.size(); ++i)
 		if (m_buffer[i] == value)
@@ -102,13 +102,13 @@ acclib::String acclib::String::operator+(const char* other)
 	return result;
 }
 
-acclib::String acclib::String::operator+=(const acclib::String& other)
+acclib::String& acclib::String::operator+=(const acclib::String& other)
 {
 	*this += other.m_buffer.buffer();
 	return *this;
 }
 
-acclib::String acclib::String::operator+=(const char* other)
+acclib::String& acclib::String::operator+=(const char* other)
 {
 	concatenate(other);
 	return *this;

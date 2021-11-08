@@ -33,7 +33,6 @@ namespace AccLibTests
 			
 			Assert::IsTrue(sut);
 			Assert::AreEqual(12, *sut);
-
 			Assert::IsFalse(pseudo_rvalue);
 		}
 

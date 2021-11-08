@@ -1,6 +1,9 @@
 #pragma once
 
+#include <cstring>
+#include <limits>
 #include <utility>
+
 #include "vector.h"
 
 namespace acclib
@@ -26,7 +29,7 @@ namespace acclib
 		String(const acclib::String& other);
 		String(acclib::String&& value) noexcept;
 
-		int index_of(const char& value);
+		size_t index_of(const char& value);
 
 		void concatenate(const acclib::String& value);
 		void concatenate(const char* value);
@@ -41,8 +44,9 @@ namespace acclib
 		acclib::String operator+(const acclib::String& other);
 		acclib::String operator+(const char* other);
 
-		acclib::String operator+=(const acclib::String& other);
-		acclib::String operator+=(const char* other);
+		//https://stackoverflow.com/questions/4581961/c-how-to-overload-operator
+		acclib::String& operator+=(const acclib::String& other);
+		acclib::String& operator+=(const char* other);
 
 		operator const char*();
 		const char* c_str() const;
