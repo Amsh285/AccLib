@@ -130,6 +130,25 @@ TEST(VectorTests, vector_iterator)
 	}
 }
 
+TEST(VectorTests, vector_reverse_iterator)
+{
+	int expected = 5;
+
+	acclib::vector<int> sut;
+	sut.push_back(1);
+	sut.push_back(2);
+	sut.push_back(3);
+	sut.push_back(4);
+	sut.push_back(5);
+
+	for (acclib::vector<int>::vector_reverse_iterator it = sut.rbegin(); it != sut.rend(); ++it)
+	{
+		int actual = *it;
+		ASSERT_EQ(expected, actual);
+		--expected;
+	}
+}
+
 void test_growth(size_t initialcapacity)
 {
 	acclib::vector<int> sut(initialcapacity);

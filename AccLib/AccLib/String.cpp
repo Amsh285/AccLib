@@ -52,6 +52,12 @@ void acclib::String::concatenate(const char* value)
 	}
 }
 
+void acclib::String::push_back(char value)
+{
+	m_buffer.at(length()) = value;
+	m_buffer.push_back('\0');
+}
+
 char& acclib::String::at(size_t index)
 {
 	if (index >= size())
@@ -88,8 +94,8 @@ bool acclib::String::operator==(const char* value)
 
 acclib::String acclib::String::operator+(const acclib::String& other)
 {
-	// bin nicht ganz zufrieden damit weil man auf die buffer nicht public zugreifen können
-	// sollte, aber kopieren oder redundanter code ist auch keine gute lösung.
+	// bin nicht ganz zufrieden damit weil man auf die buffer nicht public zugreifen kï¿½nnen
+	// sollte, aber kopieren oder redundanter code ist auch keine gute lï¿½sung.
 	acclib::String result = *this + other.m_buffer.buffer();
 	return result;
 }

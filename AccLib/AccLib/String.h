@@ -13,6 +13,8 @@ namespace acclib
 	public:
 		using string_iterator = acclib::vector<char>::iterator<char>;
 
+		using string_reverse_iterator = acclib::reverse_iterator<acclib::String::string_iterator, char>; 
+
 		static constexpr size_t npos = std::numeric_limits<size_t>::max();
 
 		// Gets the length of the string excluding the terminator symbol \0
@@ -34,6 +36,8 @@ namespace acclib
 		void concatenate(const acclib::String& value);
 		void concatenate(const char* value);
 
+		void push_back(char value);
+
 		char& at(size_t index);
 
 		acclib::String& operator=(const acclib::String& other);
@@ -53,12 +57,22 @@ namespace acclib
 
 		string_iterator begin()
 		{
-			return string_iterator(m_buffer.buffer());
+			return m_buffer.begin();
+		}
+
+		string_reverse_iterator rbegin()
+		{
+			return string_reverse_iterator(end());
 		}
 
 		string_iterator end()
 		{
 			return string_iterator(m_buffer.buffer() + length());
+		}
+
+		string_reverse_iterator rend()
+		{
+			return m_buffer.rend();
 		}
 
 		~String();
