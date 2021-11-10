@@ -2,13 +2,14 @@
 
 #include<stdexcept>
 
+#include "utility.h"
+
 namespace acclib
 {
 	template<typename T>
 	class vector
 	{
 	public:
-
 		template <class TPtr>
 		class iterator
 		{
@@ -38,7 +39,7 @@ namespace acclib
 			{
 				iterator<TPtr> temp = *this;
 				++(*this);
-				return *this;
+				return temp;
 			}
 
 			iterator<TPtr>& operator--()
@@ -51,7 +52,7 @@ namespace acclib
 			{
 				iterator<TPtr> temp = *this;
 				--(*this);
-				return *this;
+				return temp;
 			}
 
 			TPtr& operator*()
@@ -61,6 +62,8 @@ namespace acclib
 		private:
 			TPtr* ptr;
 		};
+
+		using vector_reverse_iterator = acclib::reverse_iterator<iterator<T>, T>;
 
 		size_t capacity() const { return m_capacity; };
 
@@ -136,9 +139,19 @@ namespace acclib
 			return iterator<T>(m_buffer);
 		}
 
+		vector_reverse_iterator rbegin()
+		{
+			return vector_reverse_iterator(end());
+		}
+
 		iterator<T> end()
 		{
 			return iterator<T>(m_buffer + m_size);
+		}
+
+		vector_reverse_iterator rend()
+		{
+			return vector_reverse_iterator(begin());
 		}
 
 		// Allows unsafe access to m_buffer. using indizes above size() could lead to

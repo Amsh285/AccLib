@@ -8,7 +8,7 @@
             "name": "cl.exe - Aktive Datei erstellen und debuggen",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "program": "${fileDirname}\\build\\Debug\\${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

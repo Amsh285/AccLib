@@ -111,17 +111,45 @@ TEST(StringTests, string_init_with_value)
 	ASSERT_TRUE(sut == expected_value);
 }
 
-TEST(StringTests, string_iterator)
+TEST(StringTests, string_push_back)
+{
+	acclib::String sut;
+
+	for (size_t i = 0; i < 200; i++)
+		sut.push_back('a');
+	
+	ASSERT_EQ(200, (int)sut.length());
+	ASSERT_EQ(201, (int)sut.size());
+}
+
+TEST(StringTests, string_iterator_forward)
 {
 	const char* expected = "Hallo";
-	int i = 0;
+
 	acclib::String sut(expected);
+	acclib::String actual;
 
 	for (acclib::String::string_iterator it = sut.begin(); it != sut.end(); ++it)
+		actual.push_back(*it);
+
+	ASSERT_TRUE(actual == expected);
+}
+
+TEST(StringTests, string_iterator_backward)
+{
+	const char* testValue = "Hallo";
+	const char* expected = "ollaH";
+
+	acclib::String sut(testValue);
+	acclib::String actual;
+
+	for(acclib::String::string_reverse_iterator it = sut.rbegin(); it != sut.rend(); ++it)
 	{
-		ASSERT_EQ(expected[i], *it);
-		++i;
+		char value = *it;
+		actual.push_back(value);
 	}
+
+	ASSERT_TRUE(actual == expected);
 }
 
 TEST(StringTests, string_c_str)
