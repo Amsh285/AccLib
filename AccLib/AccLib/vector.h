@@ -14,17 +14,23 @@ namespace acclib
 		class iterator
 		{
 		public:
+			using iterator_category = std::forward_iterator_tag;
+			using difference_type = std::ptrdiff_t;
+			using value_type = TPtr;
+			using pointer = TPtr*;
+			using reference = TPtr&;
+
 			iterator(TPtr* ptr) :
 				ptr(ptr)
 			{
 			}
 
-			bool operator!=(const iterator<TPtr>& other)
+			bool operator!=(const iterator<TPtr>& other) const
 			{
 				return ptr != other.ptr;
 			}
 
-			bool operator==(const iterator<TPtr>& other)
+			bool operator==(const iterator<TPtr>& other) const
 			{
 				return ptr == other.ptr;
 			}
@@ -104,7 +110,7 @@ namespace acclib
 		{
 			T* temp = new T[capacity];
 
-			// Falls die kapazit�t verkleinert wird.
+			// Falls die kapazitaet verkleinert wird.
 			size_t read_size = m_size < capacity ? m_size : capacity;
 
 			for (std::size_t i = 0; i < read_size; ++i)
@@ -154,8 +160,6 @@ namespace acclib
 			return vector_reverse_iterator(begin());
 		}
 
-		// Allows unsafe access to m_buffer. using indizes above size() could lead to
-		// overidden values when push_back is used after. Use at if for safe usage.
 		T& operator[](const size_t& index)
 		{
 			return m_buffer[index];
@@ -199,11 +203,14 @@ namespace acclib
 		}
 
 	private:
-		size_t get_new_capacity()
+		size_t get_new_capacity() const
 		{
-			size_t growth = m_capacity * 0.5f;
-			size_t new_capacity = m_capacity + growth + 1;
+			const size_t prevent_zero = 1;
 
+			size_t growth = static_cast<size_t>(m_capacity * 0.5f);
+			size_t new_capacity = m_capacity + growth + prevent_zero;
+
+			// overflow check
 			// https://stackoverflow.com/questions/206405/overflows-in-size-t-additions
 			// https://stackoverflow.com/questions/7749066/how-to-catch-out-of-memory-exception-in-c/13327733
 			if (new_capacity < m_capacity)
