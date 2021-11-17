@@ -21,4 +21,4 @@ COPY AccLib.Tests.GoogleTests/CMakeLists.txt /home/app/AccLib.Tests.GoogleTests/
 
 WORKDIR /home/app/AccLib.Tests.GoogleTests
 RUN cmake -S . -B build
-# RUN cmake --build build
+RUN cmake --build build
