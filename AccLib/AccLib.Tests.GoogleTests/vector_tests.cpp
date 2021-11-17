@@ -1,4 +1,5 @@
 
+#include <algorithm>
 #include <gtest/gtest.h>
 #include "../AccLib/vector.h"
 
@@ -149,14 +150,28 @@ TEST(VectorTests, vector_reverse_iterator)
 	}
 }
 
+TEST(VectorTests, vector_std_find)
+{
+	acclib::vector<int> sut;
+	sut.push_back(1);
+	sut.push_back(2);
+	sut.push_back(3);
+	sut.push_back(4);
+	sut.push_back(5);
+
+	acclib::vector<int>::iterator<int> it = std::find(sut.begin(), sut.end(), 3);
+
+	ASSERT_EQ(3, *it);
+}
+
 void test_growth(size_t initialcapacity)
 {
 	acclib::vector<int> sut(initialcapacity);
 
-	for (size_t i = 0; i < 200; ++i)
+	for (int i = 0; i < 200; ++i)
 		sut.push_back(i);
 
-	for (size_t i = 0; i < 200; ++i)
+	for (int i = 0; i < 200; ++i)
 		ASSERT_EQ((int)i, sut[i]);
 
 	ASSERT_EQ(200, (int)sut.size());

@@ -1,4 +1,5 @@
 
+#include <algorithm>
 #include <gtest/gtest.h>
 #include "../AccLib/String.h"
 
@@ -150,6 +151,15 @@ TEST(StringTests, string_iterator_backward)
 	}
 
 	ASSERT_TRUE(actual == expected);
+}
+
+TEST(StringTests, string_std_find)
+{
+	acclib::String sut = "Beim Badger";
+
+	acclib::String::string_iterator it = std::find(sut.begin(),sut.end(), 'g');
+
+	ASSERT_EQ('g', *it);
 }
 
 TEST(StringTests, string_c_str)
