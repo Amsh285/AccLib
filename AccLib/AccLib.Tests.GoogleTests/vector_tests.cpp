@@ -1,4 +1,5 @@
 
+#include <algorithm>
 #include <gtest/gtest.h>
 #include "../AccLib/vector.h"
 
