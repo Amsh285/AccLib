@@ -16,6 +16,7 @@ COPY AccLib /home/app/AccLib
 COPY AccLib.Tests.GoogleTests/string_tests.cpp /home/app/AccLib.Tests.GoogleTests/
 COPY AccLib.Tests.GoogleTests/unique_pointer_tests.cpp /home/app/AccLib.Tests.GoogleTests/
 COPY AccLib.Tests.GoogleTests/vector_tests.cpp /home/app/AccLib.Tests.GoogleTests/
+COPY AccLib.Tests.GoogleTests/stringhelper_tests.cpp /home/app/AccLib.Tests.GoogleTests/
 
 COPY AccLib.Tests.GoogleTests/CMakeLists.txt /home/app/AccLib.Tests.GoogleTests/
 

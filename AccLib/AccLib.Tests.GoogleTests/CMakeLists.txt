@@ -18,6 +18,7 @@ enable_testing()
 add_executable(
     string_tests
     string_tests.cpp
+    ../AccLib/stringhelper.cpp
     ../AccLib/String.cpp
 )
 
@@ -29,6 +30,12 @@ add_executable(
 add_executable(
     unique_pointer_tests
     unique_pointer_tests.cpp  
+)
+
+add_executable(
+    stringhelper_tests
+    stringhelper_tests.cpp
+    ../AccLib/stringhelper.cpp
 )
 
 target_link_libraries(
@@ -46,8 +53,14 @@ target_link_libraries(
     gtest_main
 )
 
+target_link_libraries(
+    stringhelper_tests
+    gtest_main
+)
+
 include(GoogleTest)
 
 gtest_discover_tests(string_tests)
 gtest_discover_tests(vector_tests)
 gtest_discover_tests(unique_pointer_tests)
+gtest_discover_tests(stringhelper_tests)

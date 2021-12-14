@@ -169,3 +169,59 @@ TEST(StringTests, string_c_str)
 
 	ASSERT_TRUE(sut == str);
 }
+
+TEST(StringTests, concatenate_self)
+{
+	acclib::String sut("test");
+	sut.concatenate(sut.c_str());
+
+	bool equal = sut == "testtest";
+
+	ASSERT_TRUE(equal);
+}
+
+TEST(StringTests, addition_assignment_operator)
+{
+	acclib::String val("heim");
+	acclib::String sut("Ich will ");
+	sut += val;
+
+	bool equal = sut == "Ich will heim";
+
+	ASSERT_TRUE(equal);
+}
+
+TEST(StringTests, addition_operator)
+{
+	acclib::String val("Ich will ");
+	acclib::String val2("heim");
+	acclib::String sut = val + val2;
+
+	bool equal = sut == "Ich will heim";
+
+	ASSERT_TRUE(equal);
+}
+
+TEST(StringTests, addition_operator2)
+{
+	acclib::String val("Ich will ");
+	acclib::String val2("heim");
+	acclib::String sut("ich will weg.");
+
+	sut = val + val2;
+
+	bool equal = sut == "Ich will heim";
+
+	ASSERT_TRUE(equal);
+}
+
+TEST(StringTests, addition_operator_self)
+{
+	acclib::String val("heim");
+	acclib::String sut("Ich will ");
+
+	sut = sut + val;
+	bool equal = sut == "Ich will heim";
+
+	ASSERT_TRUE(equal);
+}

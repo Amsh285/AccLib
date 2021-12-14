@@ -4,6 +4,7 @@
 #include <limits>
 #include <utility>
 
+#include "stringhelper.h"
 #include "vector.h"
 
 namespace acclib

@@ -37,19 +37,22 @@ void acclib::String::concatenate(const acclib::String& value)
 
 void acclib::String::concatenate(const char* value)
 {
-	if (strlen(value) > 0)
-	{
-		size_t terminator_position = index_of('\0');
+	if (value == nullptr)
+		return;
 
-		// override \0 terminator
-		m_buffer[terminator_position] = value[0];
+	size_t value_length = acclib::string_length(value);
 
-		// override remaining chars
-		for (size_t i = 1; i < strlen(value); ++i)
-			m_buffer.push_back(value[i]);
+	if(value_length == 0)
+		return;
 
-		m_buffer.push_back('\0');
-	}
+	size_t terminator_position = this->length();
+	m_buffer[terminator_position] = value[0];
+
+	// override remaining chars
+	for (size_t i = 1; i < value_length; ++i)
+		m_buffer.push_back(value[i]);
+	
+	m_buffer.push_back('\0');
 }
 
 void acclib::String::push_back(char value)
@@ -94,8 +97,6 @@ bool acclib::String::operator==(const char* value)
 
 acclib::String acclib::String::operator+(const acclib::String& other)
 {
-	// bin nicht ganz zufrieden damit weil man auf die buffer nicht public zugreifen k�nnen
-	// sollte, aber kopieren oder redundanter code ist auch keine gute l�sung.
 	acclib::String result = *this + other.m_buffer.buffer();
 	return result;
 }
