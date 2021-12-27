@@ -82,6 +82,18 @@ namespace acclib
 				deleter(old_ptr);
 		}
 
+		void swap(acclib::unique_pointer<T_Element, T_Deleter>& other)
+		{
+			T_Element* temp_ptr = ptr;
+			T_Deleter temp_deleter = deleter;
+
+			ptr = other.ptr;
+			deleter = other.deleter;
+			
+			other.ptr = temp_ptr;
+			other.deleter = temp_deleter;
+		}
+
 		~unique_pointer()
 		{
 			deleter(ptr);

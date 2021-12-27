@@ -40,3 +40,13 @@ TEST(UniquePointerTests, move_assignment)
 	ASSERT_EQ(12, *sut);
 	ASSERT_FALSE(pseudo_rvalue);
 }
+
+TEST(UniquePointerTests, swap)
+{
+	acclib::unique_pointer<int> sut(new int(1));
+	acclib::unique_pointer<int> other(new int(2));
+	sut.swap(other);
+
+	ASSERT_EQ(2, *sut);
+	ASSERT_EQ(1, *other);
+}
